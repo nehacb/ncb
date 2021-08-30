@@ -1,0 +1,39 @@
+//THIS PROGRAM WILL PRINT THE LIST OF MY FAVOURITE MOVIES and A SUBLIST OF THIS LIST REGARDING THE MOVIES IN WHICH ROBERT DOWNEY JR ACTED
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Scanner;
+
+public class assignment {
+public static void main(String args[]) throws SQLException 
+{
+	//Loading Driver
+	try {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3307/movies","root","");
+		Statement stmt = con.createStatement();
+		System.out.println("********List of my favourite movies are********");
+ 		ResultSet rs = stmt.executeQuery("SELECT * FROM MOVIES");
+ 		while(rs.next())
+ 		{
+ 			System.out.println("Movie Name-"+rs.getString("NAME")+"\nMovie actor-"+rs.getString("ACTOR")+"\nMovie actress-"+rs.getString("ACTRESS")+"\nRelease Date-"+rs.getInt("R_YEAR")+"\nDirector's name-"+rs.getString("D_NAME"));
+ 			System.out.println();
+ 		}
+ 		System.out.println("********The movies having Robert Downey Jr as actor form the list of my favourite movies are********");
+ 		rs = stmt.executeQuery("SELECT * FROM MOVIES where Actor='Robert Downey Jr'");
+ 		while(rs.next())
+ 		{
+ 			System.out.println("Movie Name-"+rs.getString("NAME")+"\nMovie actor-"+rs.getString("ACTOR")+"\nMovie actress-"+rs.getString("ACTRESS")+"\nRelease Date-"+rs.getInt("R_YEAR")+"\nDirector's name-"+rs.getString("D_NAME"));
+ 			System.out.println();
+ 		}
+	
+		
+	} catch (ClassNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+
+}
+}
